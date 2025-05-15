@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:quotes/viewmodels/quote_viewmodel.dart';
@@ -131,9 +132,12 @@ class _HomeViewState extends State<HomeView> {
                       },
                       onDismissed: (direction) {
                         if (direction == DismissDirection.endToStart) {
+                          HapticFeedback.vibrate();
+
                           setState(() {
                             viewModel.quotes.removeAt(index);
                           });
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: const Text("Alıntı silindi."),
