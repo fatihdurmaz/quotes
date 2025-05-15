@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:quotes/viewmodels/quote_viewmodel.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -41,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
                         )
                         : null,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(23),
                 ),
               ),
             ),
@@ -77,25 +78,90 @@ class _HomeViewState extends State<HomeView> {
                   itemCount: viewModel.quotes.length,
                   itemBuilder: (context, index) {
                     final quote = viewModel.quotes[index];
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.blue.shade500,
-                        foregroundColor: Colors.white,
-                        child: Text((index + 1).toString()),
+                    return Dismissible(
+                      key: Key(quote.id.toString()),
+                      direction: DismissDirection.horizontal,
+                      background: Container(
+                        color: Colors.orange,
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.only(left: 16),
+                        child: const Icon(Icons.share, color: Colors.white),
                       ),
-                      title: Text(quote.quote),
-                      subtitle: Text(
-                        '- ${quote.author}',
-                        textAlign: TextAlign.end,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
+                      secondaryBackground: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 16),
+                        child: const Icon(Icons.delete, color: Colors.white),
+                      ),
+                      confirmDismiss: (direction) async {
+                        if (direction == DismissDirection.endToStart) {
+                          final bool? confirm = await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Silme Onayı"),
+                                content: const Text(
+                                  "Bu alıntıyı silmek istediğinize emin misiniz?",
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.of(context).pop(false),
+                                    child: const Text("İptal"),
+                                  ),
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.of(context).pop(true),
+                                    child: const Text("Sil"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          return confirm;
+                        } else {
+                          await SharePlus.instance.share(
+                            ShareParams(
+                              text: '${quote.quote}\n${quote.author}',
+                            ),
+                          );
+
+                          return false;
+                        }
+                      },
+                      onDismissed: (direction) {
+                        if (direction == DismissDirection.endToStart) {
+                          setState(() {
+                            viewModel.quotes.removeAt(index);
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text("Alıntı silindi."),
+                              duration: Durations.long1,
+                            ),
+                          );
+                        }
+                      },
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.blueGrey.shade500,
+                          foregroundColor: Colors.white,
+                          child: Text((index + 1).toString()),
+                        ),
+                        title: Text(quote.quote),
+                        subtitle: Text(
+                          '- ${quote.author}',
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
                       ),
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return const Divider();
+                    return const Divider(thickness: 0.5);
                   },
                 );
               },

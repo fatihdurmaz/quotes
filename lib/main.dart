@@ -36,10 +36,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.blueGrey,
           foregroundColor: Colors.white,
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
       ),
       home: Scaffold(
         appBar: AppBar(
