@@ -1,16 +1,68 @@
-# quotes
+# 📱 Flutter Bootcamp - Quotes App (Hafta 2)
 
-A new Flutter project.
+Bu hafta, Flutter ile geliştirdiğimiz Quotes uygulamasının yapılandırmasını ve temel başlangıç adımlarını tamamlıyoruz. Aşağıdaki yönergeleri takip ederek projenizi sorunsuz bir şekilde çalıştırabilirsiniz.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Kurulum Adımları
 
-A few resources to get you started if this is your first Flutter project:
+### 1. Gerekli Paketleri Yükleyin
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```bash
+flutter pub get
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+### 2. Uygulama İkonunu Oluşturun
+
+```bash
+dart run flutter_launcher_icons
+```
+
+> `flutter_launcher_icons` yapılandırmasını unutmayın.
+
+---
+
+### 3. Splash Screen (Açılış Ekranı) Oluşturun
+
+```bash
+dart run flutter_native_splash:create
+```
+
+> Splash ekranınızın `flutter_native_splash` konfigürasyonu `flutter_native_splash` içinde yer almalıdır.
+
+---
+
+### 4. iOS Bağımlılıklarını Kurun
+
+```bash
+cd ios
+pod install
+cd ..
+```
+
+---
+
+## ✅ Notlar
+
+- Tüm bu işlemler sonrasında projeyi tekrar derleyin:
+
+```bash
+flutter clean
+flutter run
+```
+
+- iOS tarafında ilk derlemede Xcode ile açmanız gerekebilir.
+- Splash ve ikon işlemlerinden sonra emülatörde yeniden başlatma (hot restart) önerilir.
+
+---
+
+## 📦 Kullanılan Paketler
+
+- [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons)
+- [flutter_native_splash](https://pub.dev/packages/flutter_native_splash)
+
+---
+
+🎉 Artık uygulamanız görsel olarak hazır ve çalıştırılabilir durumda!
