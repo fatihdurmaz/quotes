@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/quote.dart';
 
 class QuoteViewModel extends ChangeNotifier {
@@ -11,6 +12,9 @@ class QuoteViewModel extends ChangeNotifier {
   List<Quote> get quotes => _filteredQuotes;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
+
+  List<Quote> get favoriteQuotes =>
+      _quotes.where((quote) => quote.isFavorite).toList();
 
   QuoteViewModel() {
     fetchQuotes();
@@ -26,6 +30,7 @@ class QuoteViewModel extends ChangeNotifier {
       final List quotesJson = response.data['quotes'];
       _quotes = quotesJson.map((json) => Quote.fromJson(json)).toList();
       _filteredQuotes = _quotes;
+      await loadFavorites();
     } catch (e) {
       _errorMessage = "Veri çekme hatası: $e";
     }
@@ -48,5 +53,38 @@ class QuoteViewModel extends ChangeNotifier {
               .toList();
     }
     notifyListeners();
+  }
+
+  void toggleFavorite(int quoteId) {
+    final index = _quotes.indexWhere((quote) => quote.id == quoteId);
+    if (index != -1) {
+      _quotes[index].isFavorite = !_quotes[index].isFavorite;
+      notifyListeners();
+      saveFavorites();
+    }
+  }
+
+  Future<void> loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteIds = prefs.getStringList('favoriteQuotes') ?? [];
+
+    for (final id in favoriteIds) {
+      final index = _quotes.indexWhere((quote) => quote.id.toString() == id);
+      if (index != -1) {
+        _quotes[index].isFavorite = true;
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> saveFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteIds =
+        _quotes
+            .where((quote) => quote.isFavorite)
+            .map((quote) => quote.id.toString())
+            .toList();
+
+    await prefs.setStringList('favoriteQuotes', favoriteIds);
   }
 }

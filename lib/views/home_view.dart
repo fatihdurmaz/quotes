@@ -161,6 +161,29 @@ class _HomeViewState extends State<HomeView> {
                             fontStyle: FontStyle.italic,
                           ),
                         ),
+                        trailing: IconButton(
+                          icon: Icon(
+                            quote.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: quote.isFavorite ? Colors.red : null,
+                          ),
+                          onPressed: () {
+                            viewModel.toggleFavorite(quote.id);
+
+                            final message =
+                                quote.isFavorite
+                                    ? "Favorile eklendi"
+                                    : "Favorilerden çıkarıldı";
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(message),
+                                duration: Duration(seconds: 1),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     );
                   },
