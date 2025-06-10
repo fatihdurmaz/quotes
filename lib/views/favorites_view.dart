@@ -74,7 +74,7 @@ class _FavoritesViewState extends State<FavoritesView> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Favorilerden çıkarıldı'),
-                        duration: Duration(seconds: 1),
+                        duration: Duration(seconds: 5),
                       ),
                     );
                   },

@@ -179,7 +179,7 @@ class _HomeViewState extends State<HomeView> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(message),
-                                duration: Duration(seconds: 1),
+                                duration: Duration(seconds: 5),
                               ),
                             );
                           },
