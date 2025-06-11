@@ -14,7 +14,7 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
-  provider: ^6.1.5
+  flutter_bloc: ^8.1.4
   shared_preferences: ^2.5.3
   lottie: ^3.3.1
   share_plus: ^11.0.0

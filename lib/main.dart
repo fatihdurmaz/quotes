@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:quotes/viewmodels/quote_viewmodel.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quotes/bloc/quote_bloc.dart';
+import 'package:quotes/bloc/quote_event.dart';
 import 'package:quotes/views/favorites_view.dart';
 import 'package:quotes/views/home_view.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => QuoteViewModel(),
+    BlocProvider(
+      create: (context) => QuoteBloc()..add(FetchQuotes()),
       child: const MyApp(),
     ),
   );
