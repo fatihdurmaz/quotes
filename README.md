@@ -1,6 +1,6 @@
-# 📱 Flutter Bootcamp - Quotes App (Hafta 2)
+# 📱 Flutter Bootcamp - Quotes App (Hafta 3)
 
-Bu hafta, Flutter ile geliştirdiğimiz Quotes uygulamasının yapılandırmasını ve temel başlangıç adımlarını tamamlıyoruz. Aşağıdaki yönergeleri takip ederek projenizi sorunsuz bir şekilde çalıştırabilirsiniz.
+Bu hafta, Flutter ile geliştirdiğimiz Quotes uygulamasında, alıntıların favorilere eklenmesi (shared_preferences paketi ile) için gerekli değişiklikleri yaparak bootcampimizi tamamladık.
 
 ---
 
